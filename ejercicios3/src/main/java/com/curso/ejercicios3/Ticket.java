@@ -30,6 +30,12 @@ public class Ticket {
     public GregorianCalendar getDate() {
         return date;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" + "price=" + price + ", id=" + id + ", date=" + date.getTime() + '}';
+    }
+    
     
     
     

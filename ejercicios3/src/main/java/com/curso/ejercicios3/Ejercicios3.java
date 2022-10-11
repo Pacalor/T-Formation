@@ -12,6 +12,7 @@ package com.curso.ejercicios3;
 public class Ejercicios3 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Rome rm = new Rome();
+        rm.run();
     }
 }

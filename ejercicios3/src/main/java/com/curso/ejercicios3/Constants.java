@@ -10,4 +10,8 @@ package com.curso.ejercicios3;
  */
 public class Constants {
     static final int PRICE = 4;
+    static final int DEFAULTOPTION = 0;
+    static final int BUY = 1;
+    static final int EXIT = 2;
+    static final String MENU="Press 1 for buy \nPress 2 for exit ";
 }
