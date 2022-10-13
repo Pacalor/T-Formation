@@ -5,22 +5,30 @@
 package com.curso.ejercicios3;
 
 import static com.curso.ejercicios3.Constants.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.InputMismatchException;
+
+import javax.security.auth.login.LoginException;
 
 /**
  * main class
  * @author dpadilla
  */
 public class Rome {
-
     private GregorianCalendar baseTime;
     private boolean exit;
     private UserInterface ui;
     private Casher casher;
     private HashSet<GregorianCalendar> daysTaken;
+
+    private User user = null;
+    private UserDB userDB = new UserDB();
+    private UserAuth userAuth = new UserAuth(userDB);
+    private HashMap<Ticket, User> tickets = new HashMap<>();
 
     public Rome() {
         exit = false;
@@ -34,6 +42,12 @@ public class Rome {
      * method that start the program
      */
     public void run() {
+        try {
+            userDB.loadDB();
+        } catch (IOException e) {
+            System.out.println("Error reading the file");
+        }
+
         //inith a base time, where millisecods, seconds, minutes and hours dont
         //matter. I will only use, year, month and day, other data will be 0
         int numTickets = 0;
@@ -49,16 +63,57 @@ public class Rome {
 
             switch (option) {
                 case BUY:
-                    numTickets = ui.askNumberTicket();
-                    casher.buyTickets(numTickets);
-                    newTicket(numTickets);
+                    if (user == null) {
+                        System.out.println(USERERROR);
+                        break;
+                    }
+                    else {
+                        numTickets = ui.askNumberTicket();
+                        casher.buyTickets(numTickets);
+                        newTicket(numTickets);
+                        break;
+                    }
+
+                case REGISTER_USER:
+                    try {
+                        try {
+                            user = userAuth.registerUser();
+                            userDB.writeDB();
+                        }
+                        catch (IOException e) {
+                            System.out.println("Error writing the file");
+                        }
+                    }
+                    catch (LoginException e) {
+                        e.printStackTrace();
+                    }
                     break;
-                case EXIT:
-                    exit = true;
+
+                case LOGIN_USER:
+                    try {
+                        user = userAuth.login();
+                    }
+                    catch (LoginException e) {
+                        e.printStackTrace();
+                    }
                     break;
+
                 case DEFAULTOPTION:
                     System.out.println(MENU);
                     break;
+
+                case EXIT:
+                    exit = true;
+
+                    try {
+                        userDB.writeDB();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+
                 default:
                     System.out.println(MENU);
             }
@@ -77,7 +132,7 @@ public class Rome {
         for (int i = 0; i < numTickets;) {
             dateNumber = ui.askDate();//interface ask for date
             ticketTime = editCalendar(dateNumber, ticketTime);
-            
+
             if (checkCalendar(ticketTime)) {//is the day avaliable?
                 ticketList.add(new Ticket((GregorianCalendar) ticketTime.clone()));
                 daysTaken.add((GregorianCalendar) ticketTime.clone());
@@ -90,6 +145,7 @@ public class Rome {
 
         for (Ticket ticket : ticketList) {
             System.out.println(ticket);
+            tickets.put(ticket, user);
         }
     }
 
@@ -115,7 +171,5 @@ public class Rome {
      */
     private boolean checkCalendar(GregorianCalendar day) {
         return !daysTaken.contains(day) && baseTime.before(day);
-
     }
-
 }
