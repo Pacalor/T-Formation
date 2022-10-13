@@ -22,12 +22,19 @@ public class Casher {
 
     }
 
+    /**
+     * Buy the number of tickets
+     * @param numTickets to buy
+     */
     public void buyTickets(int numTickets) {
         totalCost = numTickets * PRICE;
         
         askMoney();
     }
 
+    /**
+     * Ask the money needed
+     */
     private void askMoney() {
         
         boolean choosed = false;
