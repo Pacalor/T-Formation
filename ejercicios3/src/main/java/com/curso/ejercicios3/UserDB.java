@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,9 +44,9 @@ public class UserDB {
                 String[] taskString = line.split(";");
 
                 User user = new User(
-                    taskString[0],
-                    taskString[1],
-                    taskString[2]
+                    taskString[0],//name
+                    taskString[1],//dni
+                    taskString[2]//password
                 );
 
                 this.users.add(user);
@@ -107,20 +105,5 @@ public class UserDB {
         }
 
         return user.get();
-    }
-
-
-    public static String getSHA512(String input){
-        String toReturn = null;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-512");
-            digest.reset();
-            digest.update(input.getBytes("utf8"));
-            toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return toReturn;
     }
 }

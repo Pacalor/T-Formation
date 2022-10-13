@@ -12,7 +12,6 @@ import java.util.GregorianCalendar;
  * @author dpadilla
  */
 public class Ticket {
-    
     private int price;
     private static int totalId=0;
     private int id;
@@ -36,9 +35,9 @@ public class Ticket {
     public String toString() {
         return "Ticket{" + "price=" + price + ", id=" + id + ", date=" + date.getTime() + '}';
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
