@@ -15,7 +15,6 @@ import java.util.InputMismatchException;
  * @author dpadilla
  */
 public class Rome {
-
     private GregorianCalendar baseTime;
     private boolean exit;
     private UserInterface ui;
@@ -77,7 +76,7 @@ public class Rome {
         for (int i = 0; i < numTickets;) {
             dateNumber = ui.askDate();//interface ask for date
             ticketTime = editCalendar(dateNumber, ticketTime);
-            
+
             if (checkCalendar(ticketTime)) {//is the day avaliable?
                 ticketList.add(new Ticket((GregorianCalendar) ticketTime.clone()));
                 daysTaken.add((GregorianCalendar) ticketTime.clone());
