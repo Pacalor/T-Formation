@@ -6,12 +6,11 @@ package com.curso.ejercicios3;
 
 import static com.curso.ejercicios3.Constants.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- *
+ * User Interface that show text commands
  * @author dpadilla
  */
 public class UserInterface {
@@ -22,17 +21,25 @@ public class UserInterface {
         this.keyboard = new Scanner(System.in);
     }
     
+    /**
+     * Show text menu where you can select
+     * @return option selected
+     */
     public int show() {
+        //variable creation
         boolean choosed = false;
         int option=DEFAULTOPTION;
         
-        while (!choosed) {            
+        while (!choosed) { //repeat until i choose
             System.out.println("Choose an option: ");
             try {
-                 option= keyboard.nextInt();
+                option= Integer.parseInt(keyboard.nextLine());
                 choosed=true;
-            } catch (InputMismatchException e) {
+                
+            } catch (NumberFormatException e) {
+                choosed=true;
                 System.out.println("Incorrect option");
+                
             }            
         }
         
@@ -40,14 +47,14 @@ public class UserInterface {
     }
     
     /**
-     * 
-     * @return 
+     * ask the user for the number of tickets
+     * @return number of tickets
      */
     public int askNumberTicket(){
         boolean choosed = false;
         int option=DEFAULTOPTION;
         
-        while (!choosed) {            
+        while (!choosed) {//meanwhile i dont choose the number of tickets
             System.out.println("How many tickets: ");
             try {
                  option= keyboard.nextInt();
@@ -59,14 +66,17 @@ public class UserInterface {
         
         return option;
     }
-    
+    /**
+     * ask the user for a date
+     * @return list of year,month and date
+     */
     public ArrayList<Integer> askDate() {
          ArrayList<Integer> dateNumber = new ArrayList<>();
         int option=DEFAULTOPTION;
         
         while (dateNumber.size()<3) {            
             
-            switch (dateNumber.size()) {
+            switch (dateNumber.size()) {//mensaje
                 case 0:
                     System.out.println("Choose a year");
                     break;
@@ -80,7 +90,7 @@ public class UserInterface {
             }
             
             try {
-                option= keyboard.nextInt();
+                option= keyboard.nextInt();//get the number
                 dateNumber.add(option);
             } catch (InputMismatchException e) {
                 System.out.println("Incorrect option");

@@ -9,7 +9,7 @@ import static com.curso.ejercicios3.Constants.*;
 import java.util.InputMismatchException;
 
 /**
- *
+ * class that control the money
  * @author dpadilla
  */
 public class Casher {

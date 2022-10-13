@@ -8,10 +8,11 @@ import static com.curso.ejercicios3.Constants.*;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * class ticket, simulate the ticket you can buy
  * @author dpadilla
  */
 public class Ticket {
+    
     private int price;
     private static int totalId=0;
     private int id;
